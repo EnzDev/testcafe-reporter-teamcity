@@ -1,3 +1,5 @@
+const path = require("path");
+
 export default function () {
     return {
         flowId: process.env.TEAMCITY_FLOWID || process.pid.toString(),
@@ -41,7 +43,7 @@ export default function () {
 
                 testRunInfo.screenshots
                     .filter(screenshot => screenshot.takenOnFail)
-                    .map(screenshot => screenshot.screenshotPath)
+                    .map(screenshot => path.relative(process.cwd(), screenshot.screenshotPath))
                     .forEach(screenShotPath =>
                         this.write(`##teamcity[testMetadata testName='${escape(name)}' flowId='${this.flowId}' type='image' value='${escape(screenShotPath)}']`).newline()
                     );
