@@ -38,6 +38,13 @@ export default function () {
             }
             if (testRunInfo.errs && testRunInfo.errs.length > 0) {
                 this.failed++;
+
+                testRunInfo.screenshots
+                    .filter(screenshot => screenshot.takenOnFail)
+                    .map(screenshot => screenshot.screenshotPath)
+                    .forEach(screenShotPath =>
+                        this.write(`##teamcity[testMetadata testName='${escape(name)}' flowId='${this.flowId}' type='image' value='${escape(screenShotPath)}']`).newline()
+                    );
                 this.write(`##teamcity[testFailed name='${escape(name)}' message='Test Failed' captureStandardOutput='true' details='${escape(this.renderErrors(testRunInfo.errs))}' flowId='${this.flowId}']`).newline();
 
             }
@@ -75,7 +82,7 @@ const escape = (str) => {
         .replace(/\n/g, '|n')
         .replace(/\r/g, '|r')
         .replace(/\[/g, '|[')
-        .replace(/\]/g, '|]')
+        .replace(/]/g, '|]')
         .replace(/\u0085/g, '|x')
         .replace(/\u2028/g, '|l')
         .replace(/\u2029/g, '|p')
