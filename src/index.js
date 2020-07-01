@@ -41,11 +41,19 @@ export default function () {
             if (testRunInfo.errs && testRunInfo.errs.length > 0) {
                 this.failed++;
 
-                testRunInfo.screenshots
+                this.write(`##teamcity[message '${escape(process.cwd())}']`);
+
+                if(testRunInfo.screenshots) testRunInfo.screenshots
                     .filter(screenshot => screenshot.takenOnFail)
                     .map(screenshot => path.relative(process.cwd(), screenshot.screenshotPath))
-                    .forEach(screenShotPath =>
-                        this.write(`##teamcity[testMetadata testName='${escape(name)}' flowId='${this.flowId}' type='image' value='${escape(screenShotPath)}']`).newline()
+                    .forEach(screenShotPath => {
+                            console.log(screenShotPath)
+
+                            this.write(`##teamcity[publishArtifacts '${escape(screenShotPath)}']`)
+                                .newline()
+                                .write(`##teamcity[testMetadata testName='${escape(name)}' flowId='${this.flowId}' type='image' value='${escape(screenShotPath)}']`)
+                                .newline();
+                        }
                     );
                 this.write(`##teamcity[testFailed name='${escape(name)}' message='Test Failed' captureStandardOutput='true' details='${escape(this.renderErrors(testRunInfo.errs))}' flowId='${this.flowId}']`).newline();
 
