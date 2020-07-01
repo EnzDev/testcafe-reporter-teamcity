@@ -1,8 +1,11 @@
 {
-  "name": "testcafe-reporter-teamcity",
+  "name": "@enzdev/testcafe-reporter-teamcity",
   "version": "1.0.13",
-  "description": "teamcity TestCafe reporter plugin.",
-  "repository": "https://github.com/enzdev/testcafe-reporter-teamcity",
+  "description": "TeamCity TestCafe reporter plugin forked from Soluto.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enzdev/testcafe-reporter-teamcity.git"
+  },
   "author": {
     "name": "Soluto",
     "url": "https://github.com/soluto"
@@ -13,7 +16,7 @@
   ],
   "scripts": {
     "test": "gulp test",
-    "publish-please:dry": "publish-please  --dry-run",
+    "publish-please:dry": "publish-please --dry-run",
     "publish-please": "publish-please"
   },
   "keywords": [
@@ -34,5 +37,14 @@
     "publish-please": "^2.1.4",
     "read-file-relative": "^1.2.0",
     "testcafe": "latest"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/enzdev/testcafe-reporter-teamcity/issues"
+  },
+  "homepage": "https://github.com/enzdev/testcafe-reporter-teamcity#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {}
 }
